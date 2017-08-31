@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AvenueNet.iml" filepath="$PROJECT_DIR$/AvenueNet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AvenueNet.iml" filepath="$PROJECT_DIR$/AvenueNet.iml" />
       <module fileurl="file://$PROJECT_DIR$/avenue-net/avenue-net.iml" filepath="$PROJECT_DIR$/avenue-net/avenue-net.iml" />
+      <module fileurl="file://$PROJECT_DIR$/avenue-net/avenue-net.iml" filepath="$PROJECT_DIR$/avenue-net/avenue-net.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
     </modules>
   </component>
