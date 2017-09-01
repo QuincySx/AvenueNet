@@ -14,7 +14,7 @@ import okhttp3.RequestBody;
  * Created by quincysx on 2017/8/31.
  * 网络请求访问器
  */
-@SuppressWarnings({"unused", "DefaultFileTemplate"})
+@SuppressWarnings({"unused", "unchecked"})
 public class AvenueNetClient {
     private final String URL;
     private final WeakHashMap<String, Object> PARAMS;
@@ -99,11 +99,11 @@ public class AvenueNetClient {
         return observable;
     }
 
-    public Observable get() {
+    public Observable<String> get() {
         return request(HTTP.GET);
     }
 
-    public final Observable post() {
+    public final Observable<String> post() {
         if (BODY == null) {
             return request(HTTP.POST);
         } else {
@@ -114,7 +114,7 @@ public class AvenueNetClient {
         }
     }
 
-    public final Observable put() {
+    public final Observable<String> put() {
         if (BODY == null) {
             return request(HTTP.PUT);
         } else {
@@ -125,11 +125,11 @@ public class AvenueNetClient {
         }
     }
 
-    public final Observable delete() {
+    public final Observable<String> delete() {
         return request(HTTP.DELETE);
     }
 
-    public final Observable upload() {
+    public final Observable<String> upload() {
         if (PART_MAP.size() == 0) {
             //没有文件不能上传
             throw new RuntimeException("Please pass in File first");

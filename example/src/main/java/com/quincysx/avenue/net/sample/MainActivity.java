@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.quincysx.avenue.net.client.AvenueNetClient;
 
+import io.reactivex.functions.Consumer;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,6 +15,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AvenueNetClient.Builder()
-                .build();
+                .build()
+                .get()
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+
+                    }
+                });
     }
 }

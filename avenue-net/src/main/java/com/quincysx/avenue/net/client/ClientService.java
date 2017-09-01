@@ -24,8 +24,8 @@ import retrofit2.http.Url;
  * Created by quincysx on 2017/8/31.
  */
 
-@SuppressWarnings("unused")
-public interface ClientService {
+
+interface ClientService {
     @GET
     Observable<String> get(@Url String url, @QueryMap Map<String, Object> params);
 
