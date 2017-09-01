@@ -3,6 +3,8 @@ package com.quincysx.avenue.net.client;
 import com.quincysx.avenue.net.AvenueNet;
 import com.quincysx.avenue.net.ConfigKey;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -13,7 +15,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * Created by quincysx on 2017/8/31.
  */
 
-public class AvenueNetClientCreator {
+public final class NetClientCreator {
     private static class RetrofitHolder {
         private static final Retrofit Instance = new Retrofit.Builder()
                 .client(OkHttpHolder.Instance)
@@ -23,7 +25,11 @@ public class AvenueNetClientCreator {
     }
 
     private static class OkHttpHolder {
+        private static final long timeout = AvenueNet.getConfig(ConfigKey.HTTP_TIME_OUT);
         private static final OkHttpClient Instance = new OkHttpClient().newBuilder()
+                .connectTimeout(timeout, TimeUnit.SECONDS)
+                .readTimeout(timeout, TimeUnit.SECONDS)
+                .writeTimeout(timeout, TimeUnit.SECONDS)
                 .addInterceptor(OkHttpLoggerHolder.Instance)
                 .build();
     }

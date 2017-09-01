@@ -7,21 +7,41 @@ import android.content.Context;
  * 网络模块主要配置入口
  */
 
-public class AvenueNet {
+public final class AvenueNet {
 
     private AvenueNet() {
     }
 
+    /**
+     * 初始化公共配置
+     *
+     * @param context
+     * @return
+     */
     public static Configurator init(Context context) {
         setConfig(ConfigKey.APP_CONTEXT, context);
-        return Configurator.getInstance();
+        setConfig(ConfigKey.HTTP_TIME_OUT, 30);
+        return Configurator.newInstance(ConfigManager.getInstance());
     }
 
+    /**
+     * 读取公共配置
+     *
+     * @param key
+     * @param <T>
+     * @return
+     */
     public static <T> T getConfig(@ConfigKey.Key String key) {
-        return Configurator.getInstance().getConfig(key);
+        return ConfigManager.getInstance().getConfig(key);
     }
 
+    /**
+     * 设置公共配置
+     *
+     * @param key
+     * @param value
+     */
     public static void setConfig(@ConfigKey.Key String key, Object value) {
-        Configurator.getInstance().setConfig(key, value);
+        ConfigManager.getInstance().setConfig(key, value);
     }
 }

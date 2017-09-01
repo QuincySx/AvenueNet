@@ -2,43 +2,23 @@ package com.quincysx.avenue.net;
 
 import android.support.annotation.NonNull;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by quincysx on 2017/8/31.
- * 公共配置项存储
+ * 配置管理器
  */
 
+@SuppressWarnings({"unused", "JavaDoc"})
 public final class Configurator {
-    private final Map<String, Object> ConfigMap = new HashMap<>();
+    private final IConfigManager mConfigManager;
 
-    private static class Holder {
-        private static Configurator Instance = new Configurator();
+    public static Configurator newInstance(IConfigManager manager) {
+        return new Configurator(manager);
     }
 
-    public static Configurator getInstance() {
-        return Holder.Instance;
-    }
-
-    public Configurator() {
-        ConfigMap.put(ConfigKey.CONFIG_READY, false);
-        ConfigMap.put(ConfigKey.OKHTTP_LOGGER, false);
-    }
-
-    public final void setConfig(@ConfigKey.Key String key, Object value) {
-        ConfigMap.put(key, value);
-    }
-
-    public final <T> T getConfig(@ConfigKey.Key String key) {
-        if (ConfigMap.get(ConfigKey.CONFIG_READY) == false) {
-            throw new RuntimeException("is NetWork Not Ready");
-        }
-        final Object value = ConfigMap.get(key);
-        if (value == null) {
-            throw new NullPointerException(key + " IS NULL");
-        }
-        return (T) value;
+    private Configurator(IConfigManager manager) {
+        mConfigManager = manager;
+        mConfigManager.setConfig(ConfigKey.CONFIG_READY, false);
+        mConfigManager.setConfig(ConfigKey.OKHTTP_LOGGER, false);
     }
 
     /*
@@ -51,8 +31,8 @@ public final class Configurator {
      * @param host
      * @return
      */
-    public final Configurator withHost(@NonNull String host) {
-        ConfigMap.put(ConfigKey.BASE_URL, host);
+    public final Configurator withApiHost(@NonNull String host) {
+        mConfigManager.setConfig(ConfigKey.BASE_URL, host);
         return this;
     }
 
@@ -63,7 +43,18 @@ public final class Configurator {
      * @return
      */
     public final Configurator withHttpLog(boolean log) {
-        ConfigMap.put(ConfigKey.OKHTTP_LOGGER, log);
+        mConfigManager.setConfig(ConfigKey.OKHTTP_LOGGER, log);
+        return this;
+    }
+
+    /**
+     * 设置超时时间 单位秒
+     *
+     * @param second
+     * @return
+     */
+    public final Configurator withHttpTimeout(long second) {
+        mConfigManager.setConfig(ConfigKey.HTTP_TIME_OUT, second);
         return this;
     }
 
@@ -71,6 +62,6 @@ public final class Configurator {
      * 应用设置
      */
     public final void build() {
-        ConfigMap.put(ConfigKey.CONFIG_READY, true);
+        mConfigManager.setConfig(ConfigKey.CONFIG_READY, true);
     }
 }

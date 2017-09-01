@@ -12,9 +12,9 @@ public final class ConfigKey {
     public static final String APP_CONTEXT = "app_context";
     public static final String BASE_URL = "base_url";
     public static final String OKHTTP_LOGGER = "okhttp_logger";
+    public static final String HTTP_TIME_OUT = "http_time_out";
 
-    @StringDef({APP_CONTEXT, BASE_URL, OKHTTP_LOGGER})
+    @StringDef({APP_CONTEXT, BASE_URL, OKHTTP_LOGGER, CONFIG_READY, HTTP_TIME_OUT})
     public @interface Key {
-
     }
 }
