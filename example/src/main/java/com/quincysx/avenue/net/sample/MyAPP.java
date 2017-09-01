@@ -13,6 +13,7 @@ public class MyAPP extends Application {
     public void onCreate() {
         super.onCreate();
         AvenueNet.init(this)
+                .withApiHost("Http://www.baidu.com/")
                 .withHttpLog(true)
                 .withHttpTimeout(2000)
                 .build();

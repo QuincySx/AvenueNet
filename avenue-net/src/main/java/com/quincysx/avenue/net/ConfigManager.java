@@ -24,7 +24,8 @@ public final class ConfigManager implements IConfigManager {
     }
 
     public <T> T getConfig(@ConfigKey.Key String key) {
-        if (ConfigMap.get(ConfigKey.CONFIG_READY) == false) {
+        final boolean exists = (boolean) ConfigMap.get(ConfigKey.CONFIG_READY);
+        if (!exists) {
             throw new RuntimeException("is NetWork Not Ready");
         }
         final Object value = ConfigMap.get(key);

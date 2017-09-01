@@ -15,9 +15,11 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * Created by quincysx on 2017/8/31.
  */
 
-public final class NetClientCreator {
+final class NetClientCreator {
     private static class RetrofitHolder {
+        private static final String baseurl = AvenueNet.getConfig(ConfigKey.BASE_URL);
         private static final Retrofit Instance = new Retrofit.Builder()
+                .baseUrl(baseurl)
                 .client(OkHttpHolder.Instance)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -49,15 +51,15 @@ public final class NetClientCreator {
         return mInterceptor;
     }
 
-    public static Retrofit getRetrofitInstance() {
+    static Retrofit getRetrofitInstance() {
         return RetrofitHolder.Instance;
     }
 
-    public static OkHttpClient getOkHttpInstance() {
+    static OkHttpClient getOkHttpInstance() {
         return OkHttpHolder.Instance;
     }
 
-    public static HttpLoggingInterceptor getHttpLoggingInstance() {
+    static HttpLoggingInterceptor getHttpLoggingInstance() {
         return OkHttpLoggerHolder.Instance;
     }
 }
