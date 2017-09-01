@@ -68,10 +68,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void get() {
-        AvenueNetClient
-                .Builder()
+        AvenueNetClient.Builder("get")
                 .addParam("name", "getname")
-                .url("get")
                 .build()
                 .get()
                 .subscribeOn(Schedulers.io())
@@ -90,10 +88,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void post() {
-        AvenueNetClient
-                .Builder()
+        AvenueNetClient.Builder("post")
                 .addParam("name", "getname")
-                .url("post")
                 .build()
                 .post()
                 .subscribeOn(Schedulers.io())
@@ -113,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void postraw() {
         AvenueNetClient
-                .Builder()
-                .url("postraw")
+                .Builder("postraw")
                 .addParam("name", "getname")
                 .build()
                 .post()
@@ -134,9 +129,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void put() {
-        AvenueNetClient
-                .Builder()
-                .url("put")
+        AvenueNetClient.Builder("put")
                 .addParam("name", "getname")
                 .build()
                 .put()
@@ -156,9 +149,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void putraw() {
-        AvenueNetClient
-                .Builder()
-                .url("putraw")
+        AvenueNetClient.Builder("putraw")
                 .addParam("name", "getname")
 //                .setBody(RequestBody.create(MediaType.parse("*/*"), "sss"))
                 .build()
@@ -179,9 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void delete() {
-        AvenueNetClient
-                .Builder()
-                .url("delete")
+        AvenueNetClient.Builder("delete")
                 .addParam("name", "getname")
                 .build()
                 .delete()

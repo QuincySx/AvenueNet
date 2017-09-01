@@ -27,6 +27,10 @@ public class AvenueNetClient {
         return new NetClientBuilder();
     }
 
+    public static NetClientBuilder Builder(String url) {
+        return new NetClientBuilder(url);
+    }
+
     public static ClientService getService() {
         return NetClientCreator.getRetrofitInstance().create(ClientService.class);
     }
@@ -58,6 +62,9 @@ public class AvenueNetClient {
     }
 
     private Observable request(@HTTP.Type int type) {
+        if (URL == null) {
+            throw new RuntimeException("IS URL NULL");
+        }
         final ClientService service = getService();
         final Observable observable;
         switch (type) {

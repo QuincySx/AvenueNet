@@ -23,6 +23,10 @@ public final class NetClientBuilder {
     NetClientBuilder() {
     }
 
+    NetClientBuilder(String url) {
+        mUrl = url;
+    }
+
     public NetClientBuilder url(String url) {
         mUrl = url;
         return this;
