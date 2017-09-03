@@ -2,6 +2,8 @@ package com.quincysx.avenue.net;
 
 import android.support.annotation.NonNull;
 
+import com.quincysx.avenue.net.logger.Logger;
+
 /**
  * Created by quincysx on 2017/8/31.
  * 配置管理器
@@ -55,6 +57,11 @@ public final class Configurator {
      */
     public final Configurator withHttpTimeout(long second) {
         mConfigManager.setConfig(ConfigKey.HTTP_TIME_OUT, second);
+        return this;
+    }
+
+    public final Configurator withLogger(@NonNull Logger logger) {
+        mConfigManager.setConfig(ConfigKey.LOGGER_CLIENT, logger);
         return this;
     }
 

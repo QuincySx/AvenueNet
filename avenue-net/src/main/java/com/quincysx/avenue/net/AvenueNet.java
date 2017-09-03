@@ -2,6 +2,8 @@ package com.quincysx.avenue.net;
 
 import android.content.Context;
 
+import com.quincysx.avenue.net.logger.NativeLogger;
+
 /**
  * Created by quincysx on 2017/8/31.
  * 网络模块主要配置入口
@@ -21,6 +23,7 @@ public final class AvenueNet {
     public static Configurator init(Context context) {
         setConfig(ConfigKey.APP_CONTEXT, context);
         setConfig(ConfigKey.HTTP_TIME_OUT, 30);
+        setConfig(ConfigKey.LOGGER_CLIENT, new NativeLogger());
         return Configurator.newInstance(ConfigManager.getInstance());
     }
 
