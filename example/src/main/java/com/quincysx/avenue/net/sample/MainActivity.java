@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.quincysx.avenue.net.client.AvenueNetClient;
+import com.quincysx.avenue.net.result.ApiCallback;
+import com.quincysx.avenue.net.sample.bean.GetBean;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.observers.DisposableObserver;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,8 +21,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        testApi();
+//        testApi();
 
+        AvenueNetClient.Builder("get")
+                .addParam("name", "getname")
+                .build()
+                .get(new ApiCallback<GetBean>() {
+                    @Override
+                    public void onSuccess(GetBean data) {
+                        Toast.makeText(MainActivity.this, "data:" + data, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        AvenueNetClient.Builder("get")
+                .addParam("name", "getname")
+                .build()
+                .get(GetBean.class)
+                .subscribe(new DisposableObserver<GetBean>() {
+                    @Override
+                    public void onNext(@NonNull GetBean getBean) {
+                        Toast.makeText(MainActivity.this, getBean.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void testApi() {
@@ -71,9 +103,7 @@ public class MainActivity extends AppCompatActivity {
         AvenueNetClient.Builder("get")
                 .addParam("name", "getname")
                 .build()
-                .get()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .get(String.class)
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
@@ -89,11 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void post() {
         AvenueNetClient.Builder("post")
-                .addParam("name", "getname")
+                .addParam("name", "postname")
                 .build()
                 .post()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
@@ -110,11 +138,9 @@ public class MainActivity extends AppCompatActivity {
     private void postraw() {
         AvenueNetClient
                 .Builder("postraw")
-                .addParam("name", "getname")
+                .addParam("name", "postrawname")
                 .build()
                 .post()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
@@ -130,11 +156,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void put() {
         AvenueNetClient.Builder("put")
-                .addParam("name", "getname")
+                .addParam("name", "putname")
                 .build()
                 .put()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
@@ -150,12 +174,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void putraw() {
         AvenueNetClient.Builder("putraw")
-                .addParam("name", "getname")
+                .addParam("name", "putrawname")
 //                .setBody(RequestBody.create(MediaType.parse("*/*"), "sss"))
                 .build()
                 .put()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
@@ -171,11 +193,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void delete() {
         AvenueNetClient.Builder("delete")
-                .addParam("name", "getname")
+                .addParam("name", "deletename")
                 .build()
                 .delete()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {

@@ -13,7 +13,8 @@ public class MyAPP extends Application {
     public void onCreate() {
         super.onCreate();
         AvenueNet.init(this)
-                .withApiHost("http://172.16.133.60:8080/")
+//                .withApiHost("http://172.16.133.60:8080/")
+                .withApiHost("http://192.168.0.104:8080/")
                 .withHttpLog(true)
                 .withHttpTimeout(2000)
                 .build();

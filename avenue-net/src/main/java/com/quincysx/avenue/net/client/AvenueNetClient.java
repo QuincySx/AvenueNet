@@ -2,10 +2,17 @@ package com.quincysx.avenue.net.client;
 
 import android.util.Pair;
 
+import com.quincysx.avenue.net.result.ApiCallback;
+import com.quincysx.avenue.net.result.ApiCallbackSubscriber;
+import com.quincysx.avenue.net.utils.RxSchedulersUtils;
+import com.quincysx.avenue.net.utils.TypeUtils;
+
 import java.io.File;
+import java.lang.reflect.Type;
 import java.util.WeakHashMap;
 
 import io.reactivex.Observable;
+import io.reactivex.observers.DisposableObserver;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -31,11 +38,11 @@ public class AvenueNetClient {
         return new NetClientBuilder(url);
     }
 
-    public static ClientService getService() {
+    private static ClientService getService() {
         return NetClientCreator.getRetrofitInstance().create(ClientService.class);
     }
 
-    public AvenueNetClient(NetClientBuilder builder) {
+    AvenueNetClient(NetClientBuilder builder) {
         URL = builder.mUrl;
         PARAMS = builder.mParams;
         BODY = builder.mBody;
@@ -106,46 +113,135 @@ public class AvenueNetClient {
         return observable;
     }
 
-    public Observable<String> get() {
-        return request(HTTP.GET);
+    /**
+     * GET 请求
+     *
+     * @param type 目标类型 T
+     * @return T类型 被观察者
+     */
+    private <T> Observable<T> get(Type type) {
+        return request(HTTP.GET)
+                .compose(RxSchedulersUtils.typeTransformer(type));
     }
 
-    public final Observable<String> post() {
+    public final Observable<String> get() {
+        return get(String.class);
+    }
+
+    public final <T> Observable<T> get(Class<T> t) {
+        return get((Type) t);
+    }
+
+    public final <T> void get(final ApiCallback<T> callback) {
+        Type type = TypeUtils.getType(callback);
+        DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
+        get(type).subscribe(subscriber);
+    }
+
+
+    /**
+     * POST 请求
+     *
+     * @param type 目标类型 T
+     * @return T类型 被观察者
+     */
+    private <T> Observable<T> post(Type type) {
         if (BODY == null) {
-            return request(HTTP.POST);
+            return request(HTTP.POST).compose(RxSchedulersUtils.typeTransformer(type));
         } else {
             if (!PARAMS.isEmpty()) {
                 throw new RuntimeException("If BODY is set, make sure that PARAMS is empty");
             }
-            return request(HTTP.POST_RAW);
+            return request(HTTP.POST_RAW).compose(RxSchedulersUtils.typeTransformer(type));
+        }
+    }
+
+    public final Observable<String> post() {
+        return get(String.class);
+    }
+
+    public final <T> Observable<T> post(Class<T> t) {
+        return get((Type) t);
+    }
+
+    public final <T> void post(final ApiCallback<T> callback) {
+        Type type = TypeUtils.getType(callback);
+        DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
+        get(type).subscribe(subscriber);
+    }
+
+
+    /**
+     * POST 请求
+     *
+     * @param type 目标类型 T
+     * @return T类型 被观察者
+     */
+    public final <T> Observable<T> put(Type type) {
+        if (BODY == null) {
+            return request(HTTP.PUT).compose(RxSchedulersUtils.typeTransformer(type));
+        } else {
+            if (!PARAMS.isEmpty()) {
+                throw new RuntimeException("If BODY is set, make sure that PARAMS is empty");
+            }
+            return request(HTTP.PUT_RAW).compose(RxSchedulersUtils.typeTransformer(type));
         }
     }
 
     public final Observable<String> put() {
-        if (BODY == null) {
-            return request(HTTP.PUT);
-        } else {
-            if (!PARAMS.isEmpty()) {
-                throw new RuntimeException("If BODY is set, make sure that PARAMS is empty");
-            }
-            return request(HTTP.PUT_RAW);
-        }
+        return get(String.class);
+    }
+
+    public final <T> Observable<T> put(Class<T> t) {
+        return get((Type) t);
+    }
+
+    public final <T> void put(final ApiCallback<T> callback) {
+        Type type = TypeUtils.getType(callback);
+        DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
+        get(type).subscribe(subscriber);
+    }
+
+    /**
+     * DELETE 请求
+     *
+     * @param type 目标类型 T
+     * @return T类型 被观察者
+     */
+    public final <T> Observable<T> delete(Type type) {
+        return request(HTTP.DELETE).compose(RxSchedulersUtils.typeTransformer(type));
     }
 
     public final Observable<String> delete() {
-        return request(HTTP.DELETE);
+        return get(String.class);
     }
 
-    public final Observable<String> upload() {
+    public final <T> Observable<T> delete(Class<T> t) {
+        return get((Type) t);
+    }
+
+    public final <T> void delete(final ApiCallback<T> callback) {
+        Type type = TypeUtils.getType(callback);
+        DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
+        get(type).subscribe(subscriber);
+    }
+
+    /**
+     * UPLOAD 请求
+     *
+     * @param type 目标类型 T
+     * @return T类型 被观察者
+     */
+    private Observable<String> upload(Type type) {
         if (PART_MAP.size() == 0) {
             //没有文件不能上传
             throw new RuntimeException("Please pass in File first");
         } else if (PART_MAP.size() == 1 && PARAMS.size() == 0) {
             //单文件上传
-            return request(HTTP.UPLOAD);
+            return request(HTTP.UPLOAD).compose(RxSchedulersUtils.typeTransformer(type));
         } else if (PART_MAP.size() > 1 && PARAMS.size() == 0) {
             //多文件上传
-            return request(HTTP.UPLOADS);
+            return request(HTTP.UPLOADS).compose(RxSchedulersUtils.typeTransformer(type));
         } else {
             //文件与参数一块上传
             for (String s : PARAMS.keySet()) {
@@ -155,15 +251,35 @@ public class AvenueNetClient {
             }
             if (PART_MAP.size() == 1) {
                 //单文件多参数
-                return request(HTTP.UPLOAD_PARAMS);
+                return request(HTTP.UPLOAD_PARAMS).compose(RxSchedulersUtils.typeTransformer(type));
             } else {
                 //多文件多参数
-                return request(HTTP.UPLOADS_PARAMS);
+                return request(HTTP.UPLOADS_PARAMS).compose(RxSchedulersUtils.typeTransformer(type));
             }
         }
     }
 
-    public final void download() {
+    public final Observable<String> upload() {
+        return get(String.class);
+    }
+
+    public final <T> Observable<T> upload(Class<T> t) {
+        return get((Type) t);
+    }
+
+    public final <T> void upload(final ApiCallback<T> callback) {
+        Type type = TypeUtils.getType(callback);
+        DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
+        get(type).subscribe(subscriber);
+    }
+
+    /**
+     * UPLOAD 请求
+     *
+     * @param type 目标类型 T
+     * @return T类型 被观察者
+     */
+    private <T> Observable<T> download(Type type) {
 //        if (FULL_PATH == null || REQUEST.equals("")) {
 //            if (SUFFIX == null || REQUEST.equals("")) {
 //                throw new RuntimeException(
@@ -172,5 +288,6 @@ public class AvenueNetClient {
 //        }
 //        final DownloadHandler downloadHandler = new DownloadHandler(URL, DOWNLOAD_DIR, SUFFIX, FULL_PATH, SUCCESS, ERROR, FAILURE, REQUEST);
 //        downloadHandler.handleDownload();
+        return null;
     }
 }
