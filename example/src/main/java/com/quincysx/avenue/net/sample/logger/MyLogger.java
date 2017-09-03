@@ -1,7 +1,10 @@
 package com.quincysx.avenue.net.sample.logger;
 
 
+import android.support.annotation.IntDef;
+
 import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -18,22 +21,36 @@ public final class MyLogger implements com.quincysx.avenue.net.logger.Logger {
 
     //控制log等级
     private final int LEVEL;
+    
+    private static MyLogger sMyLogger;
 
-    private MyLogger() {
-        LEVEL = VERBOSE;
-        Logger.addLogAdapter(new AndroidLogAdapter());
+    @IntDef({VERBOSE, DEBUG, INFO, WARN, ERROR, NOTHING})
+    public @interface Level {
     }
 
-    private MyLogger(int i) {
+    private MyLogger(@Level int i) {
         LEVEL = i;
-    }
-
-    private static class Holder {
-        private final static MyLogger Instance = new MyLogger();
+        if (LEVEL != NOTHING) {
+            Logger.addLogAdapter(new AndroidLogAdapter());
+        }
+        if (LEVEL == ERROR) {
+            Logger.addLogAdapter(new DiskLogAdapter());
+        }
     }
 
     public static MyLogger getInstance() {
-        return Holder.Instance;
+        return getInstance(VERBOSE);
+    }
+
+    public static MyLogger getInstance(@Level int i) {
+        if (sMyLogger == null) {
+            synchronized (MyLogger.class) {
+                if (sMyLogger == null) {
+                    sMyLogger = new MyLogger(i);
+                }
+            }
+        }
+        return sMyLogger;
     }
 
     public void v(String tag, String message) {
