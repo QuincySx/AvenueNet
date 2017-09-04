@@ -188,7 +188,7 @@ public final class LoggingInterceptor implements Interceptor {
                 String name = headers.name(i);
                 // Skip headers from the request body as they are explicitly logged above.
                 if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
-                    logger.log("┣ "+name + ": " + headers.value(i));
+                    logger.log("┣ " + name + ": " + headers.value(i));
                 }
             }
 
@@ -233,16 +233,16 @@ public final class LoggingInterceptor implements Interceptor {
         ResponseBody responseBody = response.body();
         long contentLength = responseBody.contentLength();
         String bodySize = contentLength != -1 ? contentLength + "-byte" : "unknown-length";
-        logger.log("┏━ ←◀ "
+        logger.log("┏━ ←◀ Code:"
                 + response.code()
+                + " (" + tookMs + "ms" + (!logHeaders ? ", " + bodySize + " body" : "") + ')'
                 + (response.message().isEmpty() ? "" : ' ' + response.message())
-                + ' ' + response.request().url()
-                + " (" + tookMs + "ms" + (!logHeaders ? ", " + bodySize + " body" : "") + ')');
+                + ' ' + response.request().url());
 
         if (logHeaders) {
             Headers headers = response.headers();
             for (int i = 0, count = headers.size(); i < count; i++) {
-                logger.log("┣ "+headers.name(i) + ": " + headers.value(i));
+                logger.log("┣ " + headers.name(i) + ": " + headers.value(i));
             }
 
             if (!logBody || !HttpHeaders.hasBody(response)) {
@@ -268,7 +268,7 @@ public final class LoggingInterceptor implements Interceptor {
 
                 if (contentLength != 0) {
                     logger.log("");
-                    logger.log("┣ "+ buffer.clone().readString(charset));
+                    logger.log("┣ " + buffer.clone().readString(charset));
                 }
 
                 logger.log("┗━ ←◀ END HTTP (" + buffer.size() + "-byte body)");
