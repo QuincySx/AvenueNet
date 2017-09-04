@@ -7,7 +7,9 @@ import android.widget.Toast;
 
 import com.quincysx.avenue.net.client.AvenueNetClient;
 import com.quincysx.avenue.net.result.ApiCallback;
-import com.quincysx.avenue.net.sample.bean.GetBean;
+import com.quincysx.avenue.net.result.exception.ApiException;
+import com.quincysx.avenue.net.sample.bean.BaseResponse;
+import com.quincysx.avenue.net.sample.bean.TestData;
 
 import io.reactivex.functions.Consumer;
 
@@ -24,10 +26,16 @@ public class MainActivity extends AppCompatActivity {
         AvenueNetClient.Builder("get")
                 .addParam("name", "getname")
                 .build()
-                .get(new ApiCallback<GetBean>() {
+                .get(new ApiCallback<BaseResponse<TestData>>() {
+                    //                .get(new ApiCallback<BaseResponse<TestData>>() {
                     @Override
-                    public void onSuccess(GetBean data) {
+                    public void onSuccess(BaseResponse<TestData> data) {
                         Toast.makeText(MainActivity.this, "data:" + data, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        super.onError(e);
                     }
                 });
 

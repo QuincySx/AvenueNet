@@ -16,6 +16,7 @@ import static com.quincysx.avenue.net.AvenueNet.getConfig;
 
 /**
  * Created by quincysx on 2017/8/31.
+ * 创建网络请求相关对象
  */
 
 final class NetClientCreator {

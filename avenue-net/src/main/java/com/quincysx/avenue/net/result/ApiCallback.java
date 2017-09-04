@@ -1,5 +1,7 @@
 package com.quincysx.avenue.net.result;
 
+import com.quincysx.avenue.net.result.exception.ApiException;
+
 /**
  * Created by quincysx on 2017/9/3.
  */
@@ -23,7 +25,7 @@ public abstract class ApiCallback<T> {
      *
      * @param e
      */
-    public void onError(Throwable e) {
+    public void onError(ApiException e) {
     }
 
     /**

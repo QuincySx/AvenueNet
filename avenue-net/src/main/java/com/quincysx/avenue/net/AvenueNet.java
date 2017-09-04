@@ -2,6 +2,8 @@ package com.quincysx.avenue.net;
 
 import android.content.Context;
 
+import com.quincysx.avenue.net.client.verify.DefVerify;
+import com.quincysx.avenue.net.client.verify.Iverify;
 import com.quincysx.avenue.net.logger.Logger;
 import com.quincysx.avenue.net.logger.NativeLogger;
 
@@ -58,6 +60,14 @@ public final class AvenueNet {
             return ConfigManager.getInstance().getConfig(ConfigKey.LOGGER_CLIENT);
         } catch (Exception e) {
             return NativeLogger.getInstance();
+        }
+    }
+
+    public static Iverify getVerify() {
+        try {
+            return ConfigManager.getInstance().getConfig(ConfigKey.Verify_CLIENT);
+        } catch (Exception e) {
+            return DefVerify.getInstance();
         }
     }
 }

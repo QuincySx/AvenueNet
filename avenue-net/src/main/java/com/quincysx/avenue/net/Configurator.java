@@ -2,6 +2,7 @@ package com.quincysx.avenue.net;
 
 import android.support.annotation.NonNull;
 
+import com.quincysx.avenue.net.client.verify.Iverify;
 import com.quincysx.avenue.net.logger.Logger;
 
 /**
@@ -60,8 +61,25 @@ public final class Configurator {
         return this;
     }
 
+    /**
+     * 设置Logger打印对象
+     *
+     * @param logger
+     * @return
+     */
     public final Configurator withLogger(@NonNull Logger logger) {
         mConfigManager.setConfig(ConfigKey.LOGGER_CLIENT, logger);
+        return this;
+    }
+
+    /**
+     * 设置数据验证对象
+     *
+     * @param verify
+     * @return
+     */
+    public final Configurator withVerify(@NonNull Iverify verify) {
+        mConfigManager.setConfig(ConfigKey.Verify_CLIENT, verify);
         return this;
     }
 
