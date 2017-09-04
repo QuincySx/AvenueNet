@@ -1,5 +1,6 @@
 package com.quincysx.avenue.net.logger;
 
+import android.support.annotation.IntDef;
 import android.util.Log;
 
 /**
@@ -7,23 +8,40 @@ import android.util.Log;
  */
 
 public final class NativeLogger implements Logger {
-    private static final int VERBOSE = 1;
-    private static final int DEBUG = 2;
-    private static final int INFO = 3;
-    private static final int WARN = 4;
-    private static final int ERROR = 5;
-    private static final int NOTHING = 6;
+    public static final int VERBOSE = 1;
+    public static final int DEBUG = 2;
+    public static final int INFO = 3;
+    public static final int WARN = 4;
+    public static final int ERROR = 5;
+    public static final int NOTHING = 6;
 
     //控制log等级
     private final int LEVEL;
     private final String TAG = "AvenueNet";
 
-    public NativeLogger() {
-        LEVEL = VERBOSE;
+    private static NativeLogger NATIVE_LOGGER;
+
+    @IntDef({VERBOSE, DEBUG, INFO, WARN, ERROR, NOTHING})
+    public @interface Level {
     }
 
-    public NativeLogger(int LEVEL) {
+    private NativeLogger(int LEVEL) {
         this.LEVEL = LEVEL;
+    }
+
+    public static NativeLogger getInstance() {
+        return getInstance(VERBOSE);
+    }
+
+    public static NativeLogger getInstance(@Level int i) {
+        if (NATIVE_LOGGER == null) {
+            synchronized (NativeLogger.class) {
+                if (NATIVE_LOGGER == null) {
+                    NATIVE_LOGGER = new NativeLogger(i);
+                }
+            }
+        }
+        return NATIVE_LOGGER;
     }
 
     public void v(String tag, String message) {

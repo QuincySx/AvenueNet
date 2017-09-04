@@ -2,6 +2,7 @@ package com.quincysx.avenue.net;
 
 import android.content.Context;
 
+import com.quincysx.avenue.net.logger.Logger;
 import com.quincysx.avenue.net.logger.NativeLogger;
 
 /**
@@ -23,7 +24,6 @@ public final class AvenueNet {
     public static Configurator init(Context context) {
         setConfig(ConfigKey.APP_CONTEXT, context);
         setConfig(ConfigKey.HTTP_TIME_OUT, 30);
-        setConfig(ConfigKey.LOGGER_CLIENT, new NativeLogger());
         return Configurator.newInstance(ConfigManager.getInstance());
     }
 
@@ -46,5 +46,18 @@ public final class AvenueNet {
      */
     public static void setConfig(@ConfigKey.Key String key, Object value) {
         ConfigManager.getInstance().setConfig(key, value);
+    }
+
+    /**
+     * 获得Logger打印对象
+     *
+     * @return Logger 打印器
+     */
+    public static Logger getLogger() {
+        try {
+            return ConfigManager.getInstance().getConfig(ConfigKey.LOGGER_CLIENT);
+        } catch (Exception e) {
+            return NativeLogger.getInstance();
+        }
     }
 }

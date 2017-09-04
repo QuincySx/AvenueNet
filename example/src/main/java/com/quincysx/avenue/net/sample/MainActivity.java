@@ -9,9 +9,7 @@ import com.quincysx.avenue.net.client.AvenueNetClient;
 import com.quincysx.avenue.net.result.ApiCallback;
 import com.quincysx.avenue.net.sample.bean.GetBean;
 
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableObserver;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,26 +31,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        AvenueNetClient.Builder("get")
-                .addParam("name", "getname")
-                .build()
-                .get(GetBean.class)
-                .subscribe(new DisposableObserver<GetBean>() {
-                    @Override
-                    public void onNext(@NonNull GetBean getBean) {
-                        Toast.makeText(MainActivity.this, getBean.toString(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+//        AvenueNetClient.Builder("get")
+//                .addParam("name", "getname")
+//                .build()
+//                .get(GetBean.class)
+//                .subscribe(new DisposableObserver<GetBean>() {
+//                    @Override
+//                    public void onNext(@NonNull GetBean getBean) {
+//                        Toast.makeText(MainActivity.this, getBean.toString(), Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
     }
 
     private void testApi() {

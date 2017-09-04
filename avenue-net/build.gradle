@@ -36,7 +36,7 @@ dependencies {
     //转化为字符串
     compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
     //网络请求Log
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+//    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.google.code.gson:gson:2.8.1'
 }

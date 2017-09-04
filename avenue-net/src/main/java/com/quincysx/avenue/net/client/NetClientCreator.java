@@ -1,13 +1,13 @@
 package com.quincysx.avenue.net.client;
 
-import com.quincysx.avenue.net.AvenueNet;
+import android.util.Log;
+
 import com.quincysx.avenue.net.ConfigKey;
-import com.quincysx.avenue.net.logger.Logger;
+import com.quincysx.avenue.net.logger.LoggingInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -40,22 +40,21 @@ final class NetClientCreator {
     }
 
     private static class OkHttpLoggerHolder {
-        private static final HttpLoggingInterceptor Instance = getHttpLoggingInterceptor();
+        private static final LoggingInterceptor Instance = getHttpLoggingInterceptor();
     }
 
-    private static HttpLoggingInterceptor getHttpLoggingInterceptor() {
-        final HttpLoggingInterceptor mInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+    private static LoggingInterceptor getHttpLoggingInterceptor() {
+        final LoggingInterceptor mInterceptor = new LoggingInterceptor(new LoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                final Logger logger = AvenueNet.getConfig(ConfigKey.LOGGER_CLIENT);
-                logger.i("AvenueNet", message);
+                Log.d("AvenueNet", message);
             }
         });
         final boolean logger = getConfig(ConfigKey.OKHTTP_LOGGER);
         if (logger) {
-            mInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            mInterceptor.setLevel(LoggingInterceptor.Level.BODY);
         } else {
-            mInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+            mInterceptor.setLevel(LoggingInterceptor.Level.NONE);
         }
         return mInterceptor;
     }
@@ -68,7 +67,7 @@ final class NetClientCreator {
         return OkHttpHolder.Instance;
     }
 
-    static HttpLoggingInterceptor getHttpLoggingInstance() {
+    static LoggingInterceptor getHttpLoggingInstance() {
         return OkHttpLoggerHolder.Instance;
     }
 }
