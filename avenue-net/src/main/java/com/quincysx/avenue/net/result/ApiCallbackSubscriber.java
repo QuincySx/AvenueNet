@@ -4,9 +4,10 @@ import com.quincysx.avenue.net.result.exception.ApiException;
 
 /**
  * Created by quincysx on 2017/9/3.
+ * 处理回调
  */
 
-public class ApiCallbackSubscriber<T> extends ApiSubscriber<T> {
+public final class ApiCallbackSubscriber<T> extends ApiSubscriber<T> {
     ApiCallback<T> callBack;
     T data;
 
