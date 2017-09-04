@@ -18,6 +18,14 @@ public class TypeUtils {
      * @param <T>
      * @return
      */
+    public static <T> Type getType(T t) {
+        Type superclass = t.getClass().getGenericSuperclass();
+        if (superclass instanceof Class) {
+            throw new RuntimeException("Missing type parameter.");
+        }
+        ParameterizedType parameterized = (ParameterizedType) superclass;
+        return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);
+    }
 //    public static <T> Type getType(T t) {
 //        Type genType = t.getClass().getGenericSuperclass();
 //        Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
@@ -31,14 +39,6 @@ public class TypeUtils {
 //        }
 //        return finalNeedType;
 //    }
-    public static <T> Type getType(T subclass) {
-        Type superclass = subclass.getClass().getGenericSuperclass();
-        if (superclass instanceof Class) {
-            throw new RuntimeException("Missing type parameter.");
-        }
-        ParameterizedType parameterized = (ParameterizedType) superclass;
-        return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);
-    }
 
     /**
      * 获取次一级type(如果有)

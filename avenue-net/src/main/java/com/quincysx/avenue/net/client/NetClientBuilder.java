@@ -16,6 +16,7 @@ import okhttp3.RequestBody;
 public final class NetClientBuilder {
     String mUrl = null;
     WeakHashMap<String, Object> mParams = new WeakHashMap<>();
+    WeakHashMap<String, Object> mHeader = new WeakHashMap<>();
     RequestBody mBody = null;
 
     final ArrayList<Pair<String, File>> FILE_LIST = new ArrayList<>();
@@ -50,6 +51,27 @@ public final class NetClientBuilder {
      */
     public NetClientBuilder addParams(Map<String, Object> params) {
         mParams.putAll(params);
+        return this;
+    }
+
+    /**
+     * 添加请求头
+     *
+     * @param key    参数key
+     * @param header 参数值
+     */
+    public NetClientBuilder addHeader(String key, Object header) {
+        mHeader.put(key, header);
+        return this;
+    }
+
+    /**
+     * 添加一些请求头
+     *
+     * @param headers 参数键值对
+     */
+    public NetClientBuilder addHeaders(Map<String, Object> headers) {
+        mHeader.putAll(headers);
         return this;
     }
 

@@ -25,6 +25,7 @@ import okhttp3.RequestBody;
 public class AvenueNetClient {
     private final String URL;
     private final WeakHashMap<String, Object> PARAMS;
+    private final WeakHashMap<String, Object> HEADERS;
     private final RequestBody BODY;
 
     private final WeakHashMap<String, MultipartBody.Part> PART_MAP = new WeakHashMap<>();
@@ -46,6 +47,7 @@ public class AvenueNetClient {
         URL = builder.mUrl;
         PARAMS = builder.mParams;
         BODY = builder.mBody;
+        HEADERS = builder.mHeader;
 
         int fileIndex = 0;
 
@@ -76,39 +78,39 @@ public class AvenueNetClient {
         final Observable observable;
         switch (type) {
             case HTTP.GET:
-                observable = service.get(URL, PARAMS);
+                observable = service.get(URL, PARAMS, HEADERS);
                 break;
             case HTTP.POST:
-                observable = service.post(URL, PARAMS);
+                observable = service.post(URL, PARAMS, HEADERS);
                 break;
             case HTTP.POST_RAW:
-                observable = service.postRaw(URL, BODY);
+                observable = service.postRaw(URL, BODY, HEADERS);
                 break;
             case HTTP.PUT:
-                observable = service.put(URL, PARAMS);
+                observable = service.put(URL, PARAMS, HEADERS);
                 break;
             case HTTP.PUT_RAW:
-                observable = service.putRaw(URL, BODY);
+                observable = service.putRaw(URL, BODY, HEADERS);
                 break;
             case HTTP.DELETE:
-                observable = service.delete(URL, PARAMS);
+                observable = service.delete(URL, PARAMS, HEADERS);
                 break;
             case HTTP.UPLOAD:
                 String key1 = PART_MAP.keySet().iterator().next();
-                observable = service.upload(URL, PART_MAP.get(key1));
+                observable = service.upload(URL, PART_MAP.get(key1), HEADERS);
                 break;
             case HTTP.UPLOADS:
-                observable = service.upload(URL, PART_MAP);
+                observable = service.upload(URL, PART_MAP, HEADERS);
                 break;
             case HTTP.UPLOAD_PARAMS:
                 String key2 = PART_MAP.keySet().iterator().next();
-                observable = service.upload(URL, UPLOAD_PARAMS, PART_MAP.get(key2));
+                observable = service.upload(URL, UPLOAD_PARAMS, PART_MAP.get(key2), HEADERS);
                 break;
             case HTTP.UPLOADS_PARAMS:
-                observable = service.upload(URL, UPLOAD_PARAMS, PART_MAP);
+                observable = service.upload(URL, UPLOAD_PARAMS, PART_MAP, HEADERS);
                 break;
             default:
-                observable = service.get(URL, PARAMS);
+                observable = service.get(URL, PARAMS, HEADERS);
         }
         return observable;
     }
