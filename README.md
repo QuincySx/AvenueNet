@@ -9,9 +9,9 @@ AvenueNet 是一个基于 Retrofit 二次封装的网络请求库，使用 Rxjav
 
 ~~根据业务判断 Response 数据是否正确 (Done)~~
 
-统一的异常处理 (Todo)
+~~统一的异常处理 (Todo)~~
 
-切换 Json 为 fastJson (Todo)
+~~切换 Json 为 fastJson (Todo)~~
 
 支持请求头缓存拦截器的全局配置，以及请求头缓存拦截器的局部设置 (Todo)
 
