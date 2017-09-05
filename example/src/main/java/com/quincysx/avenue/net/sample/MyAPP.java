@@ -3,6 +3,9 @@ package com.quincysx.avenue.net.sample;
 import android.app.Application;
 
 import com.quincysx.avenue.net.AvenueNet;
+import com.quincysx.avenue.net.sample.api.errorhandle.ErrorHandle;
+import com.quincysx.avenue.net.sample.api.logger.MyLogger;
+import com.quincysx.avenue.net.sample.api.verify.ApiVerify;
 
 /**
  * Created by wang.rongqiang on 2017/9/1.
@@ -17,8 +20,9 @@ public class MyAPP extends Application {
 //                .withApiHost("http://192.168.0.104:8080/")
                 .withHttpLog(true)
                 .withHttpTimeout(2000)
-//                .withLogger(MyLogger.getInstance())
-//                .withVerify(Verify.getInstance())
+                .withLogger(new MyLogger())
+                .withVerify(new ApiVerify())
+                .withErrorHandle(new ErrorHandle())
                 .build();
     }
 }

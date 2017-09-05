@@ -1,4 +1,4 @@
-package com.quincysx.avenue.net.sample.logger;
+package com.quincysx.avenue.net.sample.api.logger;
 
 
 import android.support.annotation.IntDef;
@@ -21,14 +21,18 @@ public final class MyLogger implements com.quincysx.avenue.net.logger.Logger {
 
     //控制log等级
     private final int LEVEL;
-    
+
     private static MyLogger sMyLogger;
 
     @IntDef({VERBOSE, DEBUG, INFO, WARN, ERROR, NOTHING})
     public @interface Level {
     }
 
-    private MyLogger(@Level int i) {
+    public MyLogger() {
+        this(VERBOSE);
+    }
+
+    public MyLogger(@Level int i) {
         LEVEL = i;
         if (LEVEL != NOTHING) {
             Logger.addLogAdapter(new AndroidLogAdapter());
@@ -36,21 +40,6 @@ public final class MyLogger implements com.quincysx.avenue.net.logger.Logger {
         if (LEVEL == ERROR) {
             Logger.addLogAdapter(new DiskLogAdapter());
         }
-    }
-
-    public static MyLogger getInstance() {
-        return getInstance(VERBOSE);
-    }
-
-    public static MyLogger getInstance(@Level int i) {
-        if (sMyLogger == null) {
-            synchronized (MyLogger.class) {
-                if (sMyLogger == null) {
-                    sMyLogger = new MyLogger(i);
-                }
-            }
-        }
-        return sMyLogger;
     }
 
     public void v(String tag, String message) {

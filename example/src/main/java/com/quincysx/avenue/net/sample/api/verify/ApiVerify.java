@@ -1,4 +1,4 @@
-package com.quincysx.avenue.net.sample.verify;
+package com.quincysx.avenue.net.sample.api.verify;
 
 import com.quincysx.avenue.net.result.apiverify.IApiVerify;
 import com.quincysx.avenue.net.result.exception.ApiException;
@@ -9,15 +9,7 @@ import com.quincysx.avenue.net.sample.bean.BaseResponse;
  * 示例 模拟处理异常
  */
 
-public class Verify implements IApiVerify {
-    private static final class Holder {
-        private static Verify Instance = new Verify();
-    }
-
-    public static Verify getInstance() {
-        return Holder.Instance;
-    }
-
+public class ApiVerify implements IApiVerify {
     @Override
     public synchronized <T> void verify(T t) throws ApiException {
         if (t instanceof BaseResponse) {

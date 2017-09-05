@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.quincysx.avenue.net.client.AvenueNetClient;
 import com.quincysx.avenue.net.result.ApiCallback;
-import com.quincysx.avenue.net.result.exception.ApiException;
 import com.quincysx.avenue.net.sample.bean.BaseResponse;
 import com.quincysx.avenue.net.sample.bean.TestData;
 
@@ -22,22 +21,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        testApi();
+        geterror();
 
-        AvenueNetClient.builder("get")
-                .param("name", "getname")
-                .build()
-                .get(new ApiCallback<BaseResponse<TestData>>() {
-                    //                .get(new ApiCallback<BaseResponse<TestData>>() {
-                    @Override
-                    public void onSuccess(BaseResponse<TestData> data) {
-                        Toast.makeText(MainActivity.this, "data:" + data, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(ApiException e) {
-                        super.onError(e);
-                    }
-                });
+//        AvenueNetClient.builder("get")
+//                .param("name", "getname")
+//                .build()
+//                .get(new ApiCallback<BaseResponse<TestData>>() {
+//                    //                .get(new ApiCallback<BaseResponse<TestData>>() {
+//                    @Override
+//                    public void onSuccess(BaseResponse<TestData> data) {
+//                        Toast.makeText(MainActivity.this, "data:" + data, Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onError(ApiException e) {
+//                        super.onError(e);
+//                    }
+//                });
 
 //        AvenueNetClient.builder("get")
 //                .param("name", "getname")
@@ -106,7 +106,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void geterror() {
-//        AvenueNetClient.builder()
+        AvenueNetClient.builder("geterror")
+                .param("name", "getname")
+                .build()
+                .get(new ApiCallback<BaseResponse<TestData>>() {
+                    @Override
+                    public void onSuccess(BaseResponse<TestData> data) {
+                        Toast.makeText(MainActivity.this, "data:" + data, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void get() {
