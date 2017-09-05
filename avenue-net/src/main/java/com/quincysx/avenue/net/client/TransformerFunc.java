@@ -1,6 +1,6 @@
 package com.quincysx.avenue.net.client;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 import com.quincysx.avenue.net.AvenueNet;
 
 import java.lang.reflect.Type;
@@ -16,11 +16,10 @@ public class TransformerFunc<T> implements Function<String, T> {
 
     @Override
     public T apply(String json) throws Exception {
-        Gson gson = new Gson();
         if (type.equals(String.class)) {
             return (T) json;
         } else {
-            T t = gson.fromJson(json, type);
+            T t = JSON.parseObject(json, type);
             AvenueNet.getVerify().verify(t);
             return t;
         }
