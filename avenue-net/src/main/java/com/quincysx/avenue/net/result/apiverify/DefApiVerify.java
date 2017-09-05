@@ -1,4 +1,4 @@
-package com.quincysx.avenue.net.client.verify;
+package com.quincysx.avenue.net.result.apiverify;
 
 import com.quincysx.avenue.net.result.exception.ApiException;
 
@@ -7,17 +7,17 @@ import com.quincysx.avenue.net.result.exception.ApiException;
  * 统一处理异常等问题
  */
 
-public class DefVerify implements Iverify {
+public final class DefApiVerify implements IApiVerify {
     private static final class Holder {
-        private static DefVerify Instance = new DefVerify();
+        private static DefApiVerify Instance = new DefApiVerify();
     }
 
-    public static DefVerify getInstance() {
+    public static DefApiVerify getInstance() {
         return Holder.Instance;
     }
 
     @Override
     public synchronized <T> void verify(T t) throws ApiException {
-
+        
     }
 }

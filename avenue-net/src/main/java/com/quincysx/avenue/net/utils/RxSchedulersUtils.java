@@ -1,6 +1,6 @@
 package com.quincysx.avenue.net.utils;
 
-import com.quincysx.avenue.net.client.TransformerFunc;
+import com.quincysx.avenue.net.result.apiverify.TransformerFunc;
 
 import java.lang.reflect.Type;
 
@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by quincysx on 2017/9/3.
  */
 
-public class RxSchedulersUtils {
+public final class RxSchedulersUtils {
     public static <T> ObservableTransformer<T, T> thread2Main() {
         return new ObservableTransformer<T, T>() {
 

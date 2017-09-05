@@ -1,6 +1,6 @@
 package com.quincysx.avenue.net.sample.verify;
 
-import com.quincysx.avenue.net.client.verify.Iverify;
+import com.quincysx.avenue.net.result.apiverify.IApiVerify;
 import com.quincysx.avenue.net.result.exception.ApiException;
 import com.quincysx.avenue.net.sample.bean.BaseResponse;
 
@@ -9,7 +9,7 @@ import com.quincysx.avenue.net.sample.bean.BaseResponse;
  * 示例 模拟处理异常
  */
 
-public class Verify implements Iverify {
+public class Verify implements IApiVerify {
     private static final class Holder {
         private static Verify Instance = new Verify();
     }

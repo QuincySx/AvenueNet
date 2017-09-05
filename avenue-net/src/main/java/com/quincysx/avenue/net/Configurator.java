@@ -2,7 +2,8 @@ package com.quincysx.avenue.net;
 
 import android.support.annotation.NonNull;
 
-import com.quincysx.avenue.net.client.verify.Iverify;
+import com.quincysx.avenue.net.result.apierror.IApiErrorHandle;
+import com.quincysx.avenue.net.result.apiverify.IApiVerify;
 import com.quincysx.avenue.net.logger.Logger;
 
 /**
@@ -78,8 +79,19 @@ public final class Configurator {
      * @param verify
      * @return
      */
-    public final Configurator withVerify(@NonNull Iverify verify) {
-        mConfigManager.setConfig(ConfigKey.Verify_CLIENT, verify);
+    public final Configurator withVerify(@NonNull IApiVerify verify) {
+        mConfigManager.setConfig(ConfigKey.VERIFY_CLIENT, verify);
+        return this;
+    }
+
+    /**
+     * 数据异常处理
+     *
+     * @param handle
+     * @return
+     */
+    public final Configurator withErrorHandle(@NonNull IApiErrorHandle handle) {
+        mConfigManager.setConfig(ConfigKey.ERROR_HANDLE, handle);
         return this;
     }
 

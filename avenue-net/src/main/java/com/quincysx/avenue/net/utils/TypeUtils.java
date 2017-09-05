@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
  * Created by quincysx on 2017/9/3.
  */
 
-public class TypeUtils {
+public final class TypeUtils {
 
     /**
      * 获取第一级type

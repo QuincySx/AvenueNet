@@ -22,7 +22,7 @@ import okhttp3.RequestBody;
  * 网络请求访问器
  */
 @SuppressWarnings({"unused", "unchecked"})
-public class AvenueNetClient {
+public final class AvenueNetClient {
     private final String URL;
     private final WeakHashMap<String, Object> PARAMS;
     private final WeakHashMap<String, Object> HEADERS;

@@ -1,13 +1,13 @@
-package com.quincysx.avenue.net.client;
+package com.quincysx.avenue.net.result.apiverify;
 
 import com.alibaba.fastjson.JSON;
-import com.quincysx.avenue.net.AvenueNet;
+import com.quincysx.avenue.net.ConfigManager;
 
 import java.lang.reflect.Type;
 
 import io.reactivex.functions.Function;
 
-public class TransformerFunc<T> implements Function<String, T> {
+public final class TransformerFunc<T> implements Function<String, T> {
     private Type type;
 
     public TransformerFunc(Type type) {
@@ -20,7 +20,7 @@ public class TransformerFunc<T> implements Function<String, T> {
             return (T) json;
         } else {
             T t = JSON.parseObject(json, type);
-            AvenueNet.getVerify().verify(t);
+            ConfigManager.getApiVerify().verify(t);
             return t;
         }
     }
