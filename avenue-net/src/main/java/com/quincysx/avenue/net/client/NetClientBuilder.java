@@ -54,7 +54,7 @@ public final class NetClientBuilder {
      * @param key   参数key
      * @param value 参数值
      */
-    public NetClientBuilder addParam(String key, Object value) {
+    public NetClientBuilder param(String key, Object value) {
         mParams.put(key, value);
         return this;
     }
@@ -64,7 +64,7 @@ public final class NetClientBuilder {
      *
      * @param params 参数键值对
      */
-    public NetClientBuilder addParams(Map<String, Object> params) {
+    public NetClientBuilder params(Map<String, Object> params) {
         mParams.putAll(params);
         return this;
     }
@@ -75,7 +75,7 @@ public final class NetClientBuilder {
      * @param key    参数key
      * @param header 参数值
      */
-    public NetClientBuilder addHeader(String key, Object header) {
+    public NetClientBuilder header(String key, Object header) {
         mHeader.put(key, header);
         return this;
     }
@@ -85,22 +85,22 @@ public final class NetClientBuilder {
      *
      * @param headers 参数键值对
      */
-    public NetClientBuilder addHeaders(Map<String, Object> headers) {
+    public NetClientBuilder headers(Map<String, Object> headers) {
         mHeader.putAll(headers);
         return this;
     }
 
-    public NetClientBuilder addFile(String key, File val) {
+    public NetClientBuilder file(String key, File val) {
         FILE_LIST.add(new Pair<>(key, val));
         return this;
     }
 
-    public NetClientBuilder addFile(String key, String val) {
-        addFile(key, new File(val));
+    public NetClientBuilder file(String key, String val) {
+        file(key, new File(val));
         return this;
     }
 
-    public NetClientBuilder setBody(RequestBody val) {
+    public NetClientBuilder body(RequestBody val) {
         mBody = val;
         return this;
     }

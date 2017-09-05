@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        testApi();
 
-        AvenueNetClient.Builder("get")
-                .addParam("name", "getname")
+        AvenueNetClient.builder("get")
+                .param("name", "getname")
                 .build()
                 .get(new ApiCallback<BaseResponse<TestData>>() {
                     //                .get(new ApiCallback<BaseResponse<TestData>>() {
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-//        AvenueNetClient.Builder("get")
-//                .addParam("name", "getname")
+//        AvenueNetClient.builder("get")
+//                .param("name", "getname")
 //                .build()
 //                .get(GetBean.class)
 //                .subscribe(new DisposableObserver<GetBean>() {
@@ -105,9 +105,13 @@ public class MainActivity extends AppCompatActivity {
         }, 6000);
     }
 
+    private void geterror() {
+//        AvenueNetClient.builder()
+    }
+
     private void get() {
-        AvenueNetClient.Builder("get")
-                .addParam("name", "getname")
+        AvenueNetClient.builder("get")
+                .param("name", "getname")
                 .build()
                 .get(String.class)
                 .subscribe(new Consumer<String>() {
@@ -124,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void post() {
-        AvenueNetClient.Builder("post")
-                .addParam("name", "postname")
+        AvenueNetClient.builder("post")
+                .param("name", "postname")
                 .build()
                 .post()
                 .subscribe(new Consumer<String>() {
@@ -143,8 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void postraw() {
         AvenueNetClient
-                .Builder("postraw")
-                .addParam("name", "postrawname")
+                .builder("postraw")
+                .param("name", "postrawname")
                 .build()
                 .post()
                 .subscribe(new Consumer<String>() {
@@ -161,8 +165,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void put() {
-        AvenueNetClient.Builder("put")
-                .addParam("name", "putname")
+        AvenueNetClient.builder("put")
+                .param("name", "putname")
                 .build()
                 .put()
                 .subscribe(new Consumer<String>() {
@@ -179,9 +183,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void putraw() {
-        AvenueNetClient.Builder("putraw")
-                .addParam("name", "putrawname")
-//                .setBody(RequestBody.create(MediaType.parse("*/*"), "sss"))
+        AvenueNetClient.builder("putraw")
+                .param("name", "putrawname")
+//                .body(RequestBody.create(MediaType.parse("*/*"), "sss"))
                 .build()
                 .put()
                 .subscribe(new Consumer<String>() {
@@ -198,8 +202,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void delete() {
-        AvenueNetClient.Builder("delete")
-                .addParam("name", "deletename")
+        AvenueNetClient.builder("delete")
+                .param("name", "deletename")
                 .build()
                 .delete()
                 .subscribe(new Consumer<String>() {

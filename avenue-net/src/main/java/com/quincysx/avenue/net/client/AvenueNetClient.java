@@ -46,11 +46,11 @@ public final class AvenueNetClient {
     private final WeakHashMap<String, MultipartBody.Part> PART_MAP = new WeakHashMap<>();
     private final WeakHashMap<String, RequestBody> UPLOAD_PARAMS = new WeakHashMap<>();
 
-    public static NetClientBuilder Builder() {
+    public static NetClientBuilder builder() {
         return new NetClientBuilder();
     }
 
-    public static NetClientBuilder Builder(String url) {
+    public static NetClientBuilder builder(String url) {
         return new NetClientBuilder(url);
     }
 
