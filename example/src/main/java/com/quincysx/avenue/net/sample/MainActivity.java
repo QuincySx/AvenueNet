@@ -21,7 +21,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        testApi();
-        geterror();
+//        geterror();
+
+        AvenueNetClient.builder("get")
+                .param("name", "test")
+                .build()
+                .get(new ApiCallback<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+                        Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 //        AvenueNetClient.builder("get")
 //                .param("name", "getname")

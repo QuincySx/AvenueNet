@@ -17,9 +17,15 @@ package com.quincysx.avenue.net;
 
 import android.support.annotation.NonNull;
 
-import com.quincysx.avenue.net.result.apierror.IApiErrorHandle;
-import com.quincysx.avenue.net.result.apiverify.IApiVerify;
+import com.quincysx.avenue.net.logger.DefLogger;
 import com.quincysx.avenue.net.logger.Logger;
+import com.quincysx.avenue.net.result.apierror.DefApiErrorHandle;
+import com.quincysx.avenue.net.result.apierror.IApiErrorHandle;
+import com.quincysx.avenue.net.result.apiverify.DefApiVerify;
+import com.quincysx.avenue.net.result.apiverify.IApiVerify;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by quincysx on 2017/8/31.
@@ -29,6 +35,7 @@ import com.quincysx.avenue.net.logger.Logger;
 @SuppressWarnings({"unused", "JavaDoc"})
 public final class Configurator {
     private final IConfigManager mConfigManager;
+    private final HashMap<String, String> mHeaderHashMap = new HashMap<>();
 
     public static Configurator newInstance(IConfigManager manager) {
         return new Configurator(manager);
@@ -38,6 +45,10 @@ public final class Configurator {
         mConfigManager = manager;
         mConfigManager.setConfig(ConfigKey.CONFIG_READY, false);
         mConfigManager.setConfig(ConfigKey.OKHTTP_LOGGER, false);
+        mConfigManager.setConfig(ConfigKey.ERROR_HANDLE, new DefApiErrorHandle());
+        mConfigManager.setConfig(ConfigKey.VERIFY_CLIENT, new DefApiVerify());
+        mConfigManager.setConfig(ConfigKey.LOGGER_CLIENT, new DefLogger());
+        mConfigManager.setConfig(ConfigKey.COMMON_HTTP_HEADER, mHeaderHashMap);
     }
 
     /*
@@ -107,6 +118,29 @@ public final class Configurator {
      */
     public final Configurator withErrorHandle(@NonNull IApiErrorHandle handle) {
         mConfigManager.setConfig(ConfigKey.ERROR_HANDLE, handle);
+        return this;
+    }
+
+    /**
+     * 添加公共请求头
+     *
+     * @return
+     */
+    public final Configurator withHeader(@NonNull String key, String header) {
+        mHeaderHashMap.put(key, header);
+        mConfigManager.setConfig(ConfigKey.COMMON_HTTP_HEADER, mHeaderHashMap);
+        return this;
+    }
+
+    /**
+     * 添加公共请求头
+     *
+     * @param headers
+     * @return
+     */
+    public final Configurator withHeader(@NonNull Map<String, String> headers) {
+        mHeaderHashMap.putAll(headers);
+        mConfigManager.setConfig(ConfigKey.COMMON_HTTP_HEADER, mHeaderHashMap);
         return this;
     }
 

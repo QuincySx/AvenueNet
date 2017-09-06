@@ -32,8 +32,9 @@ public final class ConfigKey {
     public static final String BASE_URL = "base_url";
     public static final String OKHTTP_LOGGER = "okhttp_logger";
     public static final String HTTP_TIME_OUT = "http_time_out";
+    public static final String COMMON_HTTP_HEADER = "common_http_header";
 
-    @StringDef({APP_CONTEXT, BASE_URL, OKHTTP_LOGGER, CONFIG_READY, HTTP_TIME_OUT, LOGGER_CLIENT, VERIFY_CLIENT, ERROR_HANDLE})
+    @StringDef({APP_CONTEXT, BASE_URL, OKHTTP_LOGGER, CONFIG_READY, HTTP_TIME_OUT, LOGGER_CLIENT, VERIFY_CLIENT, ERROR_HANDLE, COMMON_HTTP_HEADER})
     public @interface Key {
     }
 }

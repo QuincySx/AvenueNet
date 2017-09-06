@@ -22,7 +22,7 @@ import android.util.Log;
  * Created by quincysx on 2017/9/3.
  */
 
-public final class NativeLogger implements Logger {
+public final class DefLogger implements Logger {
     public static final int VERBOSE = 1;
     public static final int DEBUG = 2;
     public static final int INFO = 3;
@@ -34,29 +34,18 @@ public final class NativeLogger implements Logger {
     private final int LEVEL;
     private final String TAG = "AvenueNet";
 
-    private static NativeLogger NATIVE_LOGGER;
+    private static DefLogger NATIVE_LOGGER;
 
     @IntDef({VERBOSE, DEBUG, INFO, WARN, ERROR, NOTHING})
     public @interface Level {
     }
 
-    private NativeLogger(int LEVEL) {
+    public DefLogger() {
+        this(VERBOSE);
+    }
+
+    public DefLogger(int LEVEL) {
         this.LEVEL = LEVEL;
-    }
-
-    public static NativeLogger getInstance() {
-        return getInstance(VERBOSE);
-    }
-
-    public static NativeLogger getInstance(@Level int i) {
-        if (NATIVE_LOGGER == null) {
-            synchronized (NativeLogger.class) {
-                if (NATIVE_LOGGER == null) {
-                    NATIVE_LOGGER = new NativeLogger(i);
-                }
-            }
-        }
-        return NATIVE_LOGGER;
     }
 
     public void v(String tag, String message) {

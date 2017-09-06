@@ -18,6 +18,7 @@ package com.quincysx.avenue.net.client;
 import android.util.Log;
 
 import com.quincysx.avenue.net.ConfigKey;
+import com.quincysx.avenue.net.client.interceptor.HeaderInterceptor;
 import com.quincysx.avenue.net.logger.LoggingInterceptor;
 
 import java.util.concurrent.TimeUnit;
@@ -52,6 +53,7 @@ final class NetClientCreator {
                 .readTimeout(timeout, TimeUnit.SECONDS)
                 .writeTimeout(timeout, TimeUnit.SECONDS)
                 .addInterceptor(OkHttpLoggerHolder.Instance)
+                .addNetworkInterceptor(HeaderInterceptor.create())
                 .build();
     }
 

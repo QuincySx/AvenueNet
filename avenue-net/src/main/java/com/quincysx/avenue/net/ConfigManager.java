@@ -16,10 +16,7 @@ package com.quincysx.avenue.net;
  */
 
 import com.quincysx.avenue.net.logger.Logger;
-import com.quincysx.avenue.net.logger.NativeLogger;
-import com.quincysx.avenue.net.result.apierror.DefApiErrorHandle;
 import com.quincysx.avenue.net.result.apierror.IApiErrorHandle;
-import com.quincysx.avenue.net.result.apiverify.DefApiVerify;
 import com.quincysx.avenue.net.result.apiverify.IApiVerify;
 
 import java.util.HashMap;
@@ -63,32 +60,20 @@ public final class ConfigManager implements IConfigManager {
      * @return Logger 打印器
      */
     public static Logger getLogger() {
-        try {
-            return ConfigManager.getInstance().getConfig(ConfigKey.LOGGER_CLIENT);
-        } catch (Exception e) {
-            return NativeLogger.getInstance();
-        }
+        return ConfigManager.getInstance().getConfig(ConfigKey.LOGGER_CLIENT);
     }
 
     /**
      * 获取 Api 接口数据验证对象
      */
     public static IApiVerify getApiVerify() {
-        try {
-            return ConfigManager.getInstance().getConfig(ConfigKey.VERIFY_CLIENT);
-        } catch (Exception e) {
-            return DefApiVerify.getInstance();
-        }
+        return ConfigManager.getInstance().getConfig(ConfigKey.VERIFY_CLIENT);
     }
 
     /**
      * 获取 Api 异常处理接口
      */
     public static IApiErrorHandle getApiErrorHandle() {
-        try {
-            return ConfigManager.getInstance().getConfig(ConfigKey.ERROR_HANDLE);
-        } catch (Exception e) {
-            return DefApiErrorHandle.getInstance();
-        }
+        return ConfigManager.getInstance().getConfig(ConfigKey.ERROR_HANDLE);
     }
 }

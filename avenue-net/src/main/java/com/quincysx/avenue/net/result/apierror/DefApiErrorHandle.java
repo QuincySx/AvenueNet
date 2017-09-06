@@ -23,14 +23,6 @@ import com.quincysx.avenue.net.result.exception.ApiException;
  */
 
 public final class DefApiErrorHandle implements IApiErrorHandle {
-    private static final class Holder {
-        private static DefApiErrorHandle Instance = new DefApiErrorHandle();
-    }
-
-    public static DefApiErrorHandle getInstance() {
-        return Holder.Instance;
-    }
-
     @Override
     public ApiException onHandle(Throwable t) {
         if (t instanceof ApiException) {
