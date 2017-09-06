@@ -60,4 +60,8 @@ public final class AvenueNet {
         ConfigManager.getInstance().setConfig(key, value);
     }
 
+    public static Context getAppContext() {
+        return getConfig(ConfigKey.APP_CONTEXT);
+    }
+
 }

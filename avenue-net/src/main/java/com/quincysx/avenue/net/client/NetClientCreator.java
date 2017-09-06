@@ -17,12 +17,16 @@ package com.quincysx.avenue.net.client;
 
 import android.util.Log;
 
+import com.quincysx.avenue.net.AvenueNet;
 import com.quincysx.avenue.net.ConfigKey;
+import com.quincysx.avenue.net.client.interceptor.ApiTestInterceptor;
 import com.quincysx.avenue.net.client.interceptor.HeaderInterceptor;
 import com.quincysx.avenue.net.logger.LoggingInterceptor;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -47,14 +51,33 @@ final class NetClientCreator {
     }
 
     private static class OkHttpHolder {
-        private static final long timeout = getConfig(ConfigKey.HTTP_TIME_OUT);
-        private static final OkHttpClient Instance = new OkHttpClient().newBuilder()
-                .connectTimeout(timeout, TimeUnit.SECONDS)
-                .readTimeout(timeout, TimeUnit.SECONDS)
-                .writeTimeout(timeout, TimeUnit.SECONDS)
+        private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
+        private static final ArrayList<Interceptor> INTERCEPTORS = AvenueNet.getConfig(ConfigKey.COMMON_INTERCEPTORS);
+        private static final Boolean isApiTest = AvenueNet.getConfig(ConfigKey.APITEST);
+
+        private static final long TIME_OUT = getConfig(ConfigKey.HTTP_TIME_OUT);
+        private static final OkHttpClient Instance = addInterceptor()
+                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addInterceptor(OkHttpLoggerHolder.Instance)
                 .addNetworkInterceptor(HeaderInterceptor.create())
                 .build();
+
+        private static OkHttpClient.Builder addInterceptor() {
+            if (INTERCEPTORS != null) {
+                for (Interceptor interceptor : INTERCEPTORS) {
+                    if (interceptor instanceof ApiTestInterceptor) {
+                        if (isApiTest) {
+                            BUILDER.addInterceptor(interceptor);
+                        }
+                    } else {
+                        BUILDER.addInterceptor(interceptor);
+                    }
+                }
+            }
+            return BUILDER;
+        }
     }
 
     private static class OkHttpLoggerHolder {

@@ -24,8 +24,11 @@ import com.quincysx.avenue.net.result.apierror.IApiErrorHandle;
 import com.quincysx.avenue.net.result.apiverify.DefApiVerify;
 import com.quincysx.avenue.net.result.apiverify.IApiVerify;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.Interceptor;
 
 /**
  * Created by quincysx on 2017/8/31.
@@ -36,6 +39,7 @@ import java.util.Map;
 public final class Configurator {
     private final IConfigManager mConfigManager;
     private final HashMap<String, String> mHeaderHashMap = new HashMap<>();
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     public static Configurator newInstance(IConfigManager manager) {
         return new Configurator(manager);
@@ -45,6 +49,7 @@ public final class Configurator {
         mConfigManager = manager;
         mConfigManager.setConfig(ConfigKey.CONFIG_READY, false);
         mConfigManager.setConfig(ConfigKey.OKHTTP_LOGGER, false);
+        mConfigManager.setConfig(ConfigKey.APITEST, false);
         mConfigManager.setConfig(ConfigKey.ERROR_HANDLE, new DefApiErrorHandle());
         mConfigManager.setConfig(ConfigKey.VERIFY_CLIENT, new DefApiVerify());
         mConfigManager.setConfig(ConfigKey.LOGGER_CLIENT, new DefLogger());
@@ -141,6 +146,27 @@ public final class Configurator {
     public final Configurator withHeader(@NonNull Map<String, String> headers) {
         mHeaderHashMap.putAll(headers);
         mConfigManager.setConfig(ConfigKey.COMMON_HTTP_HEADER, mHeaderHashMap);
+        return this;
+    }
+
+    /**
+     * 设置是否开启API调试
+     *
+     * @return
+     */
+    public final Configurator withAPIText(@NonNull boolean b) {
+        mConfigManager.setConfig(ConfigKey.APITEST, b);
+        return this;
+    }
+
+    /**
+     * 设置是否开启API调试
+     *
+     * @return
+     */
+    public final Configurator withInterceptors(@NonNull Interceptor interceptor) {
+        INTERCEPTORS.add(interceptor);
+        mConfigManager.setConfig(ConfigKey.COMMON_INTERCEPTORS, INTERCEPTORS);
         return this;
     }
 
