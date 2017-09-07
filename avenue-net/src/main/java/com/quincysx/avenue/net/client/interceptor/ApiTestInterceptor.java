@@ -25,6 +25,20 @@ public class ApiTestInterceptor extends BaseInterceptor {
         this.DEBUG_RAW_ID = rawId;
     }
 
+    @Override
+    public Response intercept(@NonNull Chain chain) throws IOException {
+        final String url = chain.request().url().toString();
+        if (url.contains(DEBUG_URL)) {
+            return debugResponse(chain, DEBUG_RAW_ID);
+        }
+        return chain.proceed(chain.request());
+    }
+
+    private Response debugResponse(Chain chain, @RawRes int rawId) {
+        final String json = FileUtils.getRawFile(rawId);
+        return getResponse(chain, json);
+    }
+
     private Response getResponse(Chain chain, String json) {
         return new Response.Builder()
                 .code(200)
@@ -34,21 +48,5 @@ public class ApiTestInterceptor extends BaseInterceptor {
                 .request(chain.request())
                 .protocol(Protocol.HTTP_1_1)
                 .build();
-    }
-
-    private Response debugResponse(Chain chain, @RawRes int rawId) {
-        final String json = FileUtils.getRawFile(rawId);
-        return getResponse(chain, json);
-    }
-
-    @Override
-    public Response intercept(@NonNull Chain chain) throws IOException {
-        final String urlpaream = chain.request().url().toString();
-        final int i = urlpaream.indexOf("?");
-        final String url = urlpaream.substring(0, i);
-        if (url.equals(DEBUG_URL)) {
-            return debugResponse(chain, DEBUG_RAW_ID);
-        }
-        return chain.proceed(chain.request());
     }
 }

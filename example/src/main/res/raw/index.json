@@ -1,0 +1,29 @@
+{
+  "headers": {
+    "host": [
+      "172.16.133.60:8080"
+    ],
+    "connection": [
+      "Keep-Alive"
+    ],
+    "testheader": [
+      "ceshi"
+    ],
+    "accept-encoding": [
+      "gzip"
+    ],
+    "user-agent": [
+      "okhttp/3.8.0"
+    ]
+  },
+  "code": 200,
+  "data": {
+    "test1": "1",
+    "test2": "2",
+    "test3": "3"
+  },
+  "param": {
+    "name": "test"
+  },
+  "message": "index 模拟请求成功"
+}

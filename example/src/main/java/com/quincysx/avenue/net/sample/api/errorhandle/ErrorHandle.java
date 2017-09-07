@@ -8,6 +8,7 @@ import com.quincysx.avenue.net.ConfigKey;
 import com.quincysx.avenue.net.result.apierror.IApiErrorHandle;
 import com.quincysx.avenue.net.result.exception.ApiException;
 
+import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -23,11 +24,13 @@ public class ErrorHandle implements IApiErrorHandle {
         if (t instanceof ApiException) {
             exception = (ApiException) t;
         } else if (t instanceof TimeoutException) {
-            exception = new ApiException(10001, "超时");
+            exception = new ApiException(10001, "网络连接超时");
+        } else if (t instanceof SocketTimeoutException) {
+            exception = new ApiException(10001, "网络连接超时");
         } else {
             exception = new ApiException(-1, "未知错误");
         }
-        Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, exception.getMessage(), Toast.LENGTH_SHORT).show();
         return exception;
     }
 }

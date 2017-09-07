@@ -3,6 +3,7 @@ package com.quincysx.avenue.net.sample;
 import android.app.Application;
 
 import com.quincysx.avenue.net.AvenueNet;
+import com.quincysx.avenue.net.client.interceptor.ApiTestInterceptor;
 import com.quincysx.avenue.net.sample.api.errorhandle.ErrorHandle;
 import com.quincysx.avenue.net.sample.api.logger.MyLogger;
 import com.quincysx.avenue.net.sample.api.verify.ApiVerify;
@@ -24,6 +25,8 @@ public class MyAPP extends Application {
                 .withLogger(new MyLogger())
                 .withVerify(new ApiVerify())
                 .withErrorHandle(new ErrorHandle())
+                .withAPITest(false)
+                .withInterceptors(new ApiTestInterceptor("index", R.raw.index))
                 .build();
     }
 }

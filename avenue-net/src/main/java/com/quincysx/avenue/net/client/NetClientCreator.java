@@ -67,10 +67,8 @@ final class NetClientCreator {
         private static OkHttpClient.Builder addInterceptor() {
             if (INTERCEPTORS != null) {
                 for (Interceptor interceptor : INTERCEPTORS) {
-                    if (interceptor instanceof ApiTestInterceptor) {
-                        if (isApiTest) {
-                            BUILDER.addInterceptor(interceptor);
-                        }
+                    if (!(isApiTest && interceptor instanceof ApiTestInterceptor)) {
+                        break;
                     } else {
                         BUILDER.addInterceptor(interceptor);
                     }

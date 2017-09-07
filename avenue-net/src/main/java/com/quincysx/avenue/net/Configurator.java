@@ -54,6 +54,7 @@ public final class Configurator {
         mConfigManager.setConfig(ConfigKey.VERIFY_CLIENT, new DefApiVerify());
         mConfigManager.setConfig(ConfigKey.LOGGER_CLIENT, new DefLogger());
         mConfigManager.setConfig(ConfigKey.COMMON_HTTP_HEADER, mHeaderHashMap);
+        mConfigManager.setConfig(ConfigKey.COMMON_INTERCEPTORS, INTERCEPTORS);
     }
 
     /*
@@ -154,7 +155,7 @@ public final class Configurator {
      *
      * @return
      */
-    public final Configurator withAPIText(@NonNull boolean b) {
+    public final Configurator withAPITest(@NonNull boolean b) {
         mConfigManager.setConfig(ConfigKey.APITEST, b);
         return this;
     }

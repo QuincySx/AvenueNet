@@ -23,15 +23,17 @@ public class MainActivity extends AppCompatActivity {
 //        testApi();
 //        geterror();
 
-        AvenueNetClient.builder("get")
-                .param("name", "test")
-                .build()
-                .get(new ApiCallback<String>() {
-                    @Override
-                    public void onSuccess(String data) {
-                        Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
-                    }
-                });
+        debugApi();
+
+//        AvenueNetClient.builder("get")
+//                .param("name", "test")
+//                .build()
+//                .get(new ApiCallback<String>() {
+//                    @Override
+//                    public void onSuccess(String data) {
+//                        Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
 //        AvenueNetClient.builder("get")
 //                .param("name", "getname")
@@ -69,6 +71,18 @@ public class MainActivity extends AppCompatActivity {
 //
 //                    }
 //                });
+    }
+
+    private void debugApi() {
+        AvenueNetClient.builder("index")
+                .param("name", "test")
+                .build()
+                .get(new ApiCallback<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+                        Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void testApi() {
