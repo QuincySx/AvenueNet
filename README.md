@@ -21,17 +21,14 @@ AvenueNet 是一个基于 Retrofit 二次封装的网络请求库，使用 Rxjav
 
 ~~支持请求头缓存拦截器的全局配置，以及请求头缓存拦截器的局部设置 (Done)~~
 
-支持缓存 (Todo)
-
-支持 Cookie （Todo)
-
-简单配置支持自定义 SSL （Todo）
-
-
 ### 预测 0.2Bate 版本功能预测
 支持取消网络请求
 
 优化Api调用方式
+
+支持缓存 (Todo)
+
+支持 Cookie （Todo)
 
 支持复杂 SSL 配置
 
