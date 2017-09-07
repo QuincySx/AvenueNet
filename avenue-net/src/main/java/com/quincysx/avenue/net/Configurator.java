@@ -167,7 +167,7 @@ public final class Configurator {
      *
      * @return
      */
-    public final Configurator withCache(@NonNull boolean b) {
+    private Configurator withCache(@NonNull boolean b) {
         mConfigManager.setConfig(COMMON_CACHE, b);
         return this;
     }
