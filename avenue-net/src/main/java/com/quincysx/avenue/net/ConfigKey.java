@@ -35,8 +35,9 @@ public final class ConfigKey {
     public static final String COMMON_HTTP_HEADER = "common_http_header";
     public static final String APITEST = "api_test";
     public static final String COMMON_INTERCEPTORS = "common_interceptors";
+    public static final String COMMON_CACHE = "common_cache";
 
-    @StringDef({APP_CONTEXT, BASE_URL, OKHTTP_LOGGER, CONFIG_READY, HTTP_TIME_OUT, LOGGER_CLIENT, VERIFY_CLIENT, ERROR_HANDLE, COMMON_HTTP_HEADER, APITEST, COMMON_INTERCEPTORS})
+    @StringDef({APP_CONTEXT, BASE_URL, OKHTTP_LOGGER, CONFIG_READY, HTTP_TIME_OUT, LOGGER_CLIENT, VERIFY_CLIENT, ERROR_HANDLE, COMMON_HTTP_HEADER, APITEST, COMMON_INTERCEPTORS, COMMON_CACHE})
     public @interface Key {
     }
 }

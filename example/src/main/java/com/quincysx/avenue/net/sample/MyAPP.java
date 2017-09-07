@@ -21,11 +21,12 @@ public class MyAPP extends Application {
 //                .withApiHost("http://192.168.0.104:8080/")
                 .withHttpLog(true)
                 .withHttpTimeout(2000)
+                .withCache(true)
                 .withHeader("testheader", "ceshi")
                 .withLogger(new MyLogger())
                 .withVerify(new ApiVerify())
                 .withErrorHandle(new ErrorHandle())
-                .withAPITest(false)
+                .withAPITest(true)
                 .withInterceptors(new ApiTestInterceptor("index", R.raw.index))
                 .build();
     }

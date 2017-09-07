@@ -15,17 +15,22 @@ package com.quincysx.avenue.net.client;
  * limitations under the License.
  */
 
+import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import com.quincysx.avenue.net.AvenueNet;
 import com.quincysx.avenue.net.ConfigKey;
 import com.quincysx.avenue.net.client.interceptor.ApiTestInterceptor;
+import com.quincysx.avenue.net.client.interceptor.CacheInterceptor;
 import com.quincysx.avenue.net.client.interceptor.HeaderInterceptor;
 import com.quincysx.avenue.net.logger.LoggingInterceptor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -73,6 +78,23 @@ final class NetClientCreator {
                         BUILDER.addInterceptor(interceptor);
                     }
                 }
+            }
+
+            final boolean isCache = AvenueNet.getConfig(ConfigKey.COMMON_CACHE);
+            if (isCache) {
+                final Context context = AvenueNet.getAppContext();
+                final int size = 5 * 1024;
+                final File cacheFile;
+                if (Environment.isExternalStorageEmulated()) {
+                    cacheFile = context.getExternalCacheDir();
+                } else {
+                    cacheFile = context.getCacheDir();
+                }
+                final Cache cache = new Cache(cacheFile, size);
+                final CacheInterceptor cacheInterceptor = new CacheInterceptor();
+                BUILDER.addNetworkInterceptor(cacheInterceptor);
+                BUILDER.cache(cache);
+                BUILDER.addInterceptor(cacheInterceptor);
             }
             return BUILDER;
         }

@@ -174,17 +174,17 @@ public final class AvenueNetClient {
     }
 
     public final Observable<String> post() {
-        return get(String.class);
+        return post(String.class);
     }
 
     public final <T> Observable<T> post(Class<T> t) {
-        return get((Type) t);
+        return post((Type) t);
     }
 
     public final <T> void post(final ApiCallback<T> callback) {
         Type type = TypeUtils.getType(callback);
         DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
-        get(type).subscribe(subscriber);
+        post(type).subscribe(subscriber);
     }
 
 
@@ -206,17 +206,17 @@ public final class AvenueNetClient {
     }
 
     public final Observable<String> put() {
-        return get(String.class);
+        return put(String.class);
     }
 
     public final <T> Observable<T> put(Class<T> t) {
-        return get((Type) t);
+        return put((Type) t);
     }
 
     public final <T> void put(final ApiCallback<T> callback) {
         Type type = TypeUtils.getType(callback);
         DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
-        get(type).subscribe(subscriber);
+        put(type).subscribe(subscriber);
     }
 
     /**
@@ -230,17 +230,17 @@ public final class AvenueNetClient {
     }
 
     public final Observable<String> delete() {
-        return get(String.class);
+        return delete(String.class);
     }
 
     public final <T> Observable<T> delete(Class<T> t) {
-        return get((Type) t);
+        return delete((Type) t);
     }
 
     public final <T> void delete(final ApiCallback<T> callback) {
         Type type = TypeUtils.getType(callback);
         DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
-        get(type).subscribe(subscriber);
+        delete(type).subscribe(subscriber);
     }
 
     /**
@@ -249,7 +249,7 @@ public final class AvenueNetClient {
      * @param type 目标类型 T
      * @return T类型 被观察者
      */
-    private Observable<String> upload(Type type) {
+    public final <T> Observable<T> upload(Type type) {
         if (PART_MAP.size() == 0) {
             //没有文件不能上传
             throw new RuntimeException("Please pass in File first");
@@ -277,17 +277,17 @@ public final class AvenueNetClient {
     }
 
     public final Observable<String> upload() {
-        return get(String.class);
+        return upload(String.class);
     }
 
     public final <T> Observable<T> upload(Class<T> t) {
-        return get((Type) t);
+        return upload((Type) t);
     }
 
     public final <T> void upload(final ApiCallback<T> callback) {
         Type type = TypeUtils.getType(callback);
         DisposableObserver subscriber = new ApiCallbackSubscriber(callback);
-        get(type).subscribe(subscriber);
+        upload(type).subscribe(subscriber);
     }
 
     /**

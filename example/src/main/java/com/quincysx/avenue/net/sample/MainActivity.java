@@ -23,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
 //        testApi();
 //        geterror();
 
-        debugApi();
+//        debugApi();
+
+        cacheTest();
 
 //        AvenueNetClient.builder("get")
 //                .param("name", "test")
@@ -71,6 +73,18 @@ public class MainActivity extends AppCompatActivity {
 //
 //                    }
 //                });
+    }
+
+    private void cacheTest() {
+        AvenueNetClient.builder("post")
+                .param("name", "test")
+                .build()
+                .post(new ApiCallback<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+                        Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void debugApi() {

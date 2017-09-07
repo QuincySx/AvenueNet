@@ -30,6 +30,8 @@ import java.util.Map;
 
 import okhttp3.Interceptor;
 
+import static com.quincysx.avenue.net.ConfigKey.COMMON_CACHE;
+
 /**
  * Created by quincysx on 2017/8/31.
  * 配置管理器
@@ -38,6 +40,8 @@ import okhttp3.Interceptor;
 @SuppressWarnings({"unused", "JavaDoc"})
 public final class Configurator {
     private final IConfigManager mConfigManager;
+
+    // TODO: 2017/9/7  待优化 不能这样存储 隐性 BUG
     private final HashMap<String, String> mHeaderHashMap = new HashMap<>();
     private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
@@ -134,7 +138,6 @@ public final class Configurator {
      */
     public final Configurator withHeader(@NonNull String key, String header) {
         mHeaderHashMap.put(key, header);
-        mConfigManager.setConfig(ConfigKey.COMMON_HTTP_HEADER, mHeaderHashMap);
         return this;
     }
 
@@ -146,7 +149,6 @@ public final class Configurator {
      */
     public final Configurator withHeader(@NonNull Map<String, String> headers) {
         mHeaderHashMap.putAll(headers);
-        mConfigManager.setConfig(ConfigKey.COMMON_HTTP_HEADER, mHeaderHashMap);
         return this;
     }
 
@@ -165,9 +167,18 @@ public final class Configurator {
      *
      * @return
      */
+    public final Configurator withCache(@NonNull boolean b) {
+        mConfigManager.setConfig(COMMON_CACHE, b);
+        return this;
+    }
+
+    /**
+     * 设置是否开启API调试
+     *
+     * @return
+     */
     public final Configurator withInterceptors(@NonNull Interceptor interceptor) {
         INTERCEPTORS.add(interceptor);
-        mConfigManager.setConfig(ConfigKey.COMMON_INTERCEPTORS, INTERCEPTORS);
         return this;
     }
 
